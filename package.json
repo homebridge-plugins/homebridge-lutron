@@ -2,7 +2,7 @@
   "name": "@homebridge-plugins/homebridge-lutron",
   "displayName": "Homebridge Lutron",
   "type": "module",
-  "version": "3.2.1",
+  "version": "3.2.2",
   "description": "Homebridge support for Lutron",
   "license": "Apache-2.0",
   "repository": {
