@@ -1,3 +1,9 @@
+## v3.2.2 (Pending Release)
+
+### Changed
+
+- chore(deps): dependency updates
+
 ## v3.2.1 (2026-08-24)
 
 ### Changed
