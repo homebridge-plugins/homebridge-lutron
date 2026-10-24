@@ -25,7 +25,9 @@ const { LeapClientMock, SmartBridgeMock, BridgeFinderMock } = vi.hoisted(() => {
     }
 
     emit(event: string, ...args: any[]) {
-      for (const cb of [...(this.handlers.get(event) ?? [])]) {
+      for (const cb of [
+        ...(this.handlers.get(event) ?? []),
+      ]) {
         cb(...args)
       }
       return true
@@ -105,23 +107,42 @@ const { LutronCasetaLeap } = await import('./Platform.HAP.js')
 const { LutronCasetaLeapMatterPlatform } = await import('./Platform.Matter.js')
 
 function makeLog(): any {
-  return { info: vi.fn(), warn: vi.fn(), error: vi.fn(), debug: vi.fn(), success: vi.fn(), log: vi.fn() }
+  return {
+    info: vi.fn(),
+    warn: vi.fn(),
+    error: vi.fn(),
+    debug: vi.fn(),
+    success: vi.fn(),
+    log: vi.fn(),
+  }
 }
 
 function makeApi(): any {
   return {
     on: vi.fn(),
-    hap: { uuid: { generate: (s: string) => `uuid-${s}` } },
+    hap: {
+      uuid: {
+        generate: (s: string) => `uuid-${s}`,
+      },
+    },
     platformAccessory: class {},
   }
 }
 
-const SECRET = { bridgeid: 'ABC123', ca: 'ca', key: 'key', cert: 'cert' }
+const SECRET = {
+  bridgeid: 'ABC123',
+  ca: 'ca',
+  key: 'key',
+  cert: 'cert',
+}
 
 function makePlatform() {
   const log = makeLog()
   const api = makeApi()
-  const platform: any = new LutronCasetaLeap(log, { platform: 'LutronCasetaLeap', secrets: [SECRET] } as any, api)
+  const platform: any = new LutronCasetaLeap(log, {
+    platform: 'LutronCasetaLeap',
+    secrets: [SECRET],
+  } as any, api)
   // Device scanning is exercised separately; stub it out so discovery tests do
   // not depend on the whole wiring pipeline.
   platform.processAllDevices = vi.fn()
@@ -202,7 +223,10 @@ describe('reviveBridge', () => {
     const ctx = makePlatform()
     await ctx.platform.handleBridgeDiscovery(announce)
     ctx.platform.watchdogs.get('abc123').stop()
-    return { ...ctx, bridge: ctx.platform.bridgeMgr.get('abc123') }
+    return {
+      ...ctx,
+      bridge: ctx.platform.bridgeMgr.get('abc123'),
+    }
   }
 
   it('rebuilds a client for the last known address and reconfigures the bridge', async () => {
@@ -322,7 +346,12 @@ describe('accessory identity across a repair', () => {
   async function setupWithCachedPico() {
     const ctx = makePlatform()
     // Simulate Homebridge restoring the accessory from its cache at startup.
-    const cached: any = { UUID: 'uuid-12345', displayName: 'Kitchen Pico', context: {}, services: [] }
+    const cached: any = {
+      UUID: 'uuid-12345',
+      displayName: 'Kitchen Pico',
+      context: {},
+      services: [],
+    }
     ctx.platform.configureAccessory(cached)
     // Real wiring needs HAP services; assert on registration bookkeeping only.
     ctx.platform.wireAccessory = vi.fn(async () => ({ kind: 0, name: 'Kitchen Pico' }))
@@ -410,12 +439,20 @@ describe('matter platform cached-accessory preservation', () => {
     api.unregisterPlatformAccessories = vi.fn()
     const platform: any = new LutronCasetaLeapMatterPlatform(
       log,
-      { platform: 'LutronCasetaLeap', secrets: [SECRET] } as any,
+      {
+        platform: 'LutronCasetaLeap',
+        secrets: [SECRET],
+      } as any,
       api,
     )
     // context.device is normally stamped by wireAccessory; the stubbed wire
     // skips that, but getMatterClusters reads it when building Pico parts.
-    const cached: any = { UUID: 'uuid-12345', displayName: 'Kitchen Pico', context: { device: pico }, services: [] }
+    const cached: any = {
+      UUID: 'uuid-12345',
+      displayName: 'Kitchen Pico',
+      context: { device: pico },
+      services: [],
+    }
     platform.configureAccessory(cached)
     return { platform, api, cached }
   }

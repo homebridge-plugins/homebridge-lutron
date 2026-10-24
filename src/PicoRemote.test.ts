@@ -6,7 +6,10 @@ import { PicoRemote, presetIsProgrammed } from './PicoRemote.js'
 
 describe('presetIsProgrammed', () => {
   it('treats the empty Preset shell as not programmed', () => {
-    expect(presetIsProgrammed({ href: '/preset/229', Parent: { href: '/programmingmodel/216' } })).toBe(false)
+    expect(presetIsProgrammed({
+      href: '/preset/229',
+      Parent: { href: '/programmingmodel/216' },
+    })).toBe(false)
   })
 
   it('treats null/undefined/non-object as not programmed', () => {
@@ -17,15 +20,23 @@ describe('presetIsProgrammed', () => {
   })
 
   it('treats empty assignment arrays as not programmed', () => {
-    expect(presetIsProgrammed({ href: '/p/1', Parent: { href: '/pm/1' }, PresetAssignments: [] })).toBe(false)
+    expect(presetIsProgrammed({
+      href: '/p/1',
+      Parent: { href: '/pm/1' },
+      PresetAssignments: [],
+    })).toBe(false)
   })
 
   it('detects scene-style PresetAssignments (the common dimmer/switch case)', () => {
     expect(presetIsProgrammed({
       href: '/preset/173',
       Parent: { href: '/programmingmodel/164' },
-      PresetAssignments: [{ href: '/presetassignment/50' }],
-      DimmedLevelAssignments: [{ href: '/dimmedlevelassignment/50' }],
+      PresetAssignments: [
+        { href: '/presetassignment/50' },
+      ],
+      DimmedLevelAssignments: [
+        { href: '/dimmedlevelassignment/50' },
+      ],
     })).toBe(true)
   })
 
@@ -33,17 +44,23 @@ describe('presetIsProgrammed', () => {
     expect(presetIsProgrammed({
       href: '/preset/222',
       Parent: { href: '/programmingmodel/210' },
-      PlayPauseToggleAssignments: [{ href: '/playpausetoggleassignment/1' }],
+      PlayPauseToggleAssignments: [
+        { href: '/playpausetoggleassignment/1' },
+      ],
     })).toBe(true)
     expect(presetIsProgrammed({
       href: '/preset/224',
       Parent: { href: '/programmingmodel/212' },
-      NextTrackAssignments: [{ href: '/nexttrackassignment/3' }],
+      NextTrackAssignments: [
+        { href: '/nexttrackassignment/3' },
+      ],
     })).toBe(true)
     expect(presetIsProgrammed({
       href: '/preset/223',
       Parent: { href: '/programmingmodel/211' },
-      FavoriteCycleAssignments: [{ href: '/favoritecycleassignment/2' }],
+      FavoriteCycleAssignments: [
+        { href: '/favoritecycleassignment/2' },
+      ],
     })).toBe(true)
   })
 
@@ -51,7 +68,9 @@ describe('presetIsProgrammed', () => {
     expect(presetIsProgrammed({
       href: '/preset/1',
       Parent: { href: '/pm/1' },
-      ImaginaryFutureAssignments: [{ href: '/imaginary/1' }],
+      ImaginaryFutureAssignments: [
+        { href: '/imaginary/1' },
+      ],
     })).toBe(true)
   })
 })

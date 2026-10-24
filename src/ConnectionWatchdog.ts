@@ -136,7 +136,9 @@ export class ConnectionWatchdog {
       // Quiet the repeated announcements once a bridge has been unreachable
       // for a while; the first failure of a run is always at warn.
       const firstAttempt = this.consecutiveReviveFailures === 0
-      const announce = firstAttempt ? this.opts.log.warn.bind(this.opts.log) : this.opts.log.debug.bind(this.opts.log)
+      const announce = firstAttempt
+        ? this.opts.log.warn.bind(this.opts.log)
+        : this.opts.log.debug.bind(this.opts.log)
       announce(`LEAP connection to bridge ${this.opts.bridgeLabel} appears stale (${threshold} consecutive failed pings); forcing a reconnect`)
 
       this.consecutiveFailures = 0
@@ -151,7 +153,9 @@ export class ConnectionWatchdog {
         }
       } catch (reviveError) {
         this.consecutiveReviveFailures++
-        const report = firstAttempt ? this.opts.log.error.bind(this.opts.log) : this.opts.log.debug.bind(this.opts.log)
+        const report = firstAttempt
+          ? this.opts.log.error.bind(this.opts.log)
+          : this.opts.log.debug.bind(this.opts.log)
         report(`Watchdog failed to re-establish connection to bridge ${this.opts.bridgeLabel}; will keep trying:`, reviveError)
       } finally {
         this.reviving = false

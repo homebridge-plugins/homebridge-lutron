@@ -35,10 +35,20 @@ const { LutronCasetaLeap } = await import('./Platform.HAP.js')
 process.setMaxListeners(0)
 
 function makePlatform() {
-  const log: any = { info: vi.fn(), warn: vi.fn(), error: vi.fn(), debug: vi.fn(), success: vi.fn() }
+  const log: any = {
+    info: vi.fn(),
+    warn: vi.fn(),
+    error: vi.fn(),
+    debug: vi.fn(),
+    success: vi.fn(),
+  }
   const api: any = {
     on: vi.fn(),
-    hap: { uuid: { generate: (s: string) => `uuid-${s}` } },
+    hap: {
+      uuid: {
+        generate: (s: string) => `uuid-${s}`,
+      },
+    },
     platformAccessory: class {},
   }
   const platform: any = new LutronCasetaLeap(log, { platform: 'LutronCasetaLeap', secrets: [] } as any, api)
@@ -52,7 +62,9 @@ function makeDevice(DeviceType: string) {
     FullyQualifiedName: ['Hall', 'Diva'],
     SerialNumber: 12345,
     ModelNumber: 'DVRF-6L-LA',
-    LocalZones: [{ href: '/zone/1' }],
+    LocalZones: [
+      { href: '/zone/1' },
+    ],
   } as any
 }
 
@@ -79,7 +91,9 @@ describe('device type routing', () => {
     // already in the device definition - so say so rather than guessing.
     const { platform, log } = makePlatform()
     const device = makeDevice('DivaSmartDimmer')
-    device.ButtonGroups = [{ href: '/buttongroup/1' }]
+    device.ButtonGroups = [
+      { href: '/buttongroup/1' },
+    ]
 
     return platform.wireAccessory({ context: {} } as any, {} as any, device).then(() => {
       const line = log.debug.mock.calls.map((c: any[]) => c.join(' ')).join('\n')

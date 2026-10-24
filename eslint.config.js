@@ -3,7 +3,9 @@ import { antfu } from '@antfu/eslint-config'
 /** @type {typeof antfu} */
 export default antfu(
   {
-    ignores: [],
+    // The release workflow downloads this just before npm publish, where
+    // prepublishOnly lints it, so it must not be held to this repo's style
+    ignores: ['.github/npm-version-script-esm.js'],
     jsx: false,
     rules: {
       'curly': ['error', 'multi-line'],
@@ -32,10 +34,17 @@ export default antfu(
       'perfectionist/sort-named-imports': 'error',
       'quotes': ['error', 'single'],
       'sort-imports': 0,
-      'style/brace-style': ['error', '1tbs', { allowSingleLine: true }],
+      'style/brace-style': [
+        'error',
+        '1tbs',
+        { allowSingleLine: true },
+      ],
       'style/quote-props': ['error', 'consistent-as-needed'],
       'test/no-only-tests': 'error',
-      'unused-imports/no-unused-vars': ['error', { caughtErrors: 'none' }],
+      'unused-imports/no-unused-vars': [
+        'error',
+        { caughtErrors: 'none' },
+      ],
     },
     typescript: true,
   },

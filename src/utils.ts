@@ -13,7 +13,10 @@ export function normalizeConfig(raw?: PlatformConfig): LutronCasetaLeapPluginCon
   if (!raw) {
     return defaults as LutronCasetaLeapPluginConfig
   }
-  return { ...defaults, ...(raw as any) } as LutronCasetaLeapPluginConfig
+  return {
+    ...defaults,
+    ...(raw as any),
+  } as LutronCasetaLeapPluginConfig
 }
 
 /**

@@ -79,7 +79,12 @@ export class WallSwitch {
       await this.bridge.client.request('CreateRequest', `${zoneHref}/commandprocessor`, {
         Command: {
           CommandType: 'GoToLevel',
-          Parameter: [{ Type: 'Level', Value: value ? 100 : 0 }],
+          Parameter: [
+            {
+              Type: 'Level',
+              Value: value ? 100 : 0,
+            },
+          ],
         },
       })
       cb(null)

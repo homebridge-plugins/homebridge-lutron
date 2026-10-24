@@ -79,7 +79,9 @@ describe('connectionWatchdog', () => {
 
   it('a successful ping resets the consecutive-failure count', async () => {
     let failing = true
-    const ping = vi.fn(() => (failing ? Promise.reject(new Error('down')) : Promise.resolve({})))
+    const ping = vi.fn(() => (failing
+      ? Promise.reject(new Error('down'))
+      : Promise.resolve({})))
     const { watchdog, revive } = makeWatchdog({ ping })
     watchdog.start()
 
@@ -96,7 +98,9 @@ describe('connectionWatchdog', () => {
   })
 
   it('skips pings while skip() reports the bridge is mid-reconfiguration', async () => {
-    const { watchdog, ping, revive } = makeWatchdog({ skip: () => true })
+    const { watchdog, ping, revive } = makeWatchdog({
+      skip: () => true,
+    })
     watchdog.start()
     await vi.advanceTimersByTimeAsync(5000)
     expect(ping).not.toHaveBeenCalled()
@@ -151,7 +155,12 @@ describe('connectionWatchdog', () => {
     // 60s interval, 3 strikes.
     const ping = vi.fn().mockRejectedValue(new Error('down'))
     const revive = vi.fn().mockResolvedValue(undefined)
-    const watchdog = new ConnectionWatchdog({ bridgeLabel: 'b', ping, revive, log: makeLog() })
+    const watchdog = new ConnectionWatchdog({
+      bridgeLabel: 'b',
+      ping,
+      revive,
+      log: makeLog(),
+    })
     watchdog.start()
 
     await vi.advanceTimersByTimeAsync(59_999)
@@ -188,7 +197,11 @@ describe('connectionWatchdog', () => {
         reject(new Error('drained'))
       }, 50)
     }))
-    const { watchdog, revive } = makeWatchdog({ ping, skip: () => reconfiguring, failureThreshold: 1 })
+    const { watchdog, revive } = makeWatchdog({
+      ping,
+      skip: () => reconfiguring,
+      failureThreshold: 1,
+    })
     watchdog.start()
 
     await vi.advanceTimersByTimeAsync(3000)
@@ -212,7 +225,9 @@ describe('connectionWatchdog', () => {
     // looks healthy but no events are being delivered, so the platform has to
     // be told to re-subscribe.
     let failing = true
-    const ping = vi.fn(() => (failing ? Promise.reject(new Error('down')) : Promise.resolve({})))
+    const ping = vi.fn(() => (failing
+      ? Promise.reject(new Error('down'))
+      : Promise.resolve({})))
     const revive = vi.fn().mockRejectedValue(new Error('bridge still rebooting'))
     const onHealthy = vi.fn()
     const { watchdog } = makeWatchdog({ ping, revive, onHealthy })

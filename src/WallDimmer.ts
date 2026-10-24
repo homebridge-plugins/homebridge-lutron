@@ -157,7 +157,9 @@ export class WallDimmer {
       await this.bridge.client.request('CreateRequest', `${zoneHref}/commandprocessor`, {
         Command: {
           CommandType: 'GoToLevel',
-          Parameter: [{ Type: 'Level', Value: targetLevel }],
+          Parameter: [
+            { Type: 'Level', Value: targetLevel },
+          ],
         },
       })
       for (const callback of callbacks) {
@@ -172,7 +174,9 @@ export class WallDimmer {
   }
 
   private handleOnSet(value: CharacteristicValue, cb: CharacteristicSetCallback) {
-    this.queueLevelChange({ on: Boolean(value) }, cb)
+    this.queueLevelChange({
+      on: Boolean(value),
+    }, cb)
   }
 
   private async handleOnGet(cb: CharacteristicGetCallback) {
@@ -196,7 +200,9 @@ export class WallDimmer {
   }
 
   private handleBrightnessSet(value: CharacteristicValue, cb: CharacteristicSetCallback) {
-    this.queueLevelChange({ brightness: Number(value) }, cb)
+    this.queueLevelChange({
+      brightness: Number(value),
+    }, cb)
   }
 
   private async handleBrightnessGet(cb: CharacteristicGetCallback) {
@@ -228,7 +234,9 @@ export class WallDimmer {
     if (matterApi && this.accessory?.UUID) {
       const rawPercent = Number(status?.Level ?? 0)
       const clampedPercent = Math.max(0, Math.min(100, rawPercent))
-      const currentLevel = clampedPercent <= 0 ? 0 : Math.max(1, Math.min(254, Math.round((clampedPercent / 100) * 254)))
+      const currentLevel = clampedPercent <= 0
+        ? 0
+        : Math.max(1, Math.min(254, Math.round((clampedPercent / 100) * 254)))
 
       void matterApi.updateAccessoryState(this.accessory.UUID, 'onOff', { onOff: clampedPercent > 0 })
       void matterApi.updateAccessoryState(this.accessory.UUID, 'levelControl', { currentLevel })

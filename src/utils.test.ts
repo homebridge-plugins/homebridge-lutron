@@ -28,7 +28,10 @@ describe('normalizeConfig', () => {
   })
 
   it('preserves arbitrary extra fields from raw config', () => {
-    const cfg = normalizeConfig({ platform: 'LutronCasetaLeap', secrets: ['x'] } as any)
+    const cfg = normalizeConfig({
+      platform: 'LutronCasetaLeap',
+      secrets: ['x'],
+    } as any)
     expect((cfg as any).secrets).toEqual(['x'])
   })
 })

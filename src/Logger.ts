@@ -71,9 +71,15 @@ export function createFilteredLogger(base: Logging, level: LogLevelOption): Logg
   // Methods are bound to the original logger so internal `this` references
   // (prefix, formatting helpers) still see the right instance.
   ;(fn as any).prefix = base.prefix
-  ;(fn as any).info = suppressInfo ? noop : base.info.bind(base)
-  ;(fn as any).success = suppressInfo ? noop : base.success.bind(base)
-  ;(fn as any).warn = suppressWarn ? noop : base.warn.bind(base)
+  ;(fn as any).info = suppressInfo
+    ? noop
+    : base.info.bind(base)
+  ;(fn as any).success = suppressInfo
+    ? noop
+    : base.success.bind(base)
+  ;(fn as any).warn = suppressWarn
+    ? noop
+    : base.warn.bind(base)
   ;(fn as any).error = base.error.bind(base)
   ;(fn as any).debug = base.debug.bind(base)
   ;(fn as any).log = (lvl: LogLevel, msg: string, ...params: any[]) => {

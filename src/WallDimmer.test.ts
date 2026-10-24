@@ -43,10 +43,17 @@ describe('wallDimmer level writes', () => {
       })),
     }
 
-    const info: any = { setCharacteristic: vi.fn(() => info) }
+    const info: any = {
+      setCharacteristic: vi.fn(() => info),
+    }
 
     const platform: any = {
-      log: { debug: vi.fn(), info: vi.fn(), warn: vi.fn(), error: vi.fn() },
+      log: {
+        debug: vi.fn(),
+        info: vi.fn(),
+        warn: vi.fn(),
+        error: vi.fn(),
+      },
       on: vi.fn(),
       api: {
         hap: {
@@ -69,17 +76,23 @@ describe('wallDimmer level writes', () => {
       ModelNumber: 'DVRF-6L-LA',
       SerialNumber: 1234,
       FullyQualifiedName: ['Hall', 'Diva'],
-      LocalZones: [{ href: '/zone/1' }],
+      LocalZones: [
+        { href: '/zone/1' },
+      ],
     }
 
     const accessory: any = {
       context: { device },
-      getService: vi.fn((s: string) => (s === 'AccessoryInformation' ? info : lightbulb)),
+      getService: vi.fn((s: string) => (s === 'AccessoryInformation'
+        ? info
+        : lightbulb)),
       addService: vi.fn(() => lightbulb),
     }
 
     request = vi.fn(async () => ({}))
-    const bridge: any = { client: { request } }
+    const bridge: any = {
+      client: { request },
+    }
 
     return new WallDimmer(platform, accessory, bridge, device as any)
   }

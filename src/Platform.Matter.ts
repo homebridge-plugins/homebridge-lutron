@@ -220,7 +220,12 @@ export class LutronCasetaLeapMatterPlatform extends LutronCasetaLeap {
           await bridge.client.request('CreateRequest', `${zoneHref}/commandprocessor`, {
             Command: {
               CommandType: 'GoToLevel',
-              Parameter: [{ Type: 'Level', Value: clampPercent(levelPercent) }],
+              Parameter: [
+                {
+                  Type: 'Level',
+                  Value: clampPercent(levelPercent),
+                },
+              ],
             },
           })
         }
@@ -271,7 +276,12 @@ export class LutronCasetaLeapMatterPlatform extends LutronCasetaLeap {
           await bridge.client.request('CreateRequest', `${zoneHref}/commandprocessor`, {
             Command: {
               CommandType: 'GoToLevel',
-              Parameter: [{ Type: 'Level', Value: on ? 100 : 0 }],
+              Parameter: [
+                {
+                  Type: 'Level',
+                  Value: on ? 100 : 0,
+                },
+              ],
             },
           })
         }
