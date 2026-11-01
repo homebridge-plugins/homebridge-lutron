@@ -25,7 +25,7 @@ Homebridge plugin to integrate Lutron Caséta devices into HomeKit
 
 - To use this plugin, you will need to already have:
   - [Node](https://nodejs.org): latest version of `v22`, `v24` or `v26` - any other major version is not supported.
-  - [Homebridge](https://homebridge.io): `v2` - refer to link for more information and installation instructions.
+  - [Homebridge](https://homebridge.io): `v1.11.4` or later, or `v2` (Matter needs `v2`) - refer to link for more information and installation instructions.
   - A Lutron Smart Bridge that supports the LEAP protocol (the Caséta Smart Bridge 2 `L-BDG2-WH`, Smart Bridge Pro `L-BDGPRO2-WH`, or RA2 Select main repeater). The original non-LEAP Smart Bridge is not supported.
 
 ### Setup
@@ -37,9 +37,9 @@ Homebridge plugin to integrate Lutron Caséta devices into HomeKit
 
 ### Supported Devices
 
-- Wall dimmers
+- Wall dimmers (including Diva smart dimmers)
 - Wall switches
-- Pico remotes (2, 3 and 4 button, including raise/lower and scene variants)
+- Pico remotes (2, 3 and 4 button, including raise/lower, scene, 2-group and zone variants, and Paddle Switch Picos)
 - Serena tilt-only wood blinds
 - Occupancy / vacancy sensors
 

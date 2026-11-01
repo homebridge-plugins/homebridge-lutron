@@ -3,7 +3,7 @@
 ### Changed
 
 - ci: update github actions to their latest versions (#284)
-- chore(deps): dependency updates
+- docs: correct the homebridge version and the supported devices in the readme
 
 ## v3.2.2 (2026-10-18)
 
