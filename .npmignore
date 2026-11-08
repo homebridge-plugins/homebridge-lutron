@@ -145,3 +145,6 @@ vitest.config.ts
 /test
 /__tests__
 vitest.config.js
+
+# notes for ai coding assistants, kept in the repo
+CLAUDE.md
