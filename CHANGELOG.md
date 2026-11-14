@@ -3,6 +3,7 @@
 ### Changed
 
 - ci: update github actions to their latest versions (#284)
+- chore(deps): dependency updates
 - docs: correct the homebridge version and the supported devices in the readme
 - chore: leave CLAUDE.md out of the published package
 - ci: publish releases with node.js v26, the current lts
